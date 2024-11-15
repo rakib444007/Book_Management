@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mx-auto py-8">
+    <!-- Title Section -->
+    <h1 class="text-white text-center font-bold text-5xl mb-10">Select Your Favorite Book</h1>
+
+    <!-- Brand Buttons -->
+    <div class="flex justify-center mb-10">
+        {% for bar in brand %}
+            <a href="{% url 'brand_wise_car' bar.slug %}" class="btn btn-danger mx-4 px-5 py-3 text-white font-medium rounded-lg bg-red-600 hover:bg-red-700">
+                {{ bar.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- Content Layout: Sidebar for Categories and Posts Section -->
+    <div class="flex">
+        <!-- Categories Sidebar -->
+        <aside class="w-1/4 pr-6">
+            <h2 class="text-2xl font-semibold mb-4 text-white">Categories</h2>
+            <div class="space-y-2">
+                {% for cat in categories %}
+                    <a href="{% url 'category_wise_post' cat.slug %}" class="block text-lg font-medium text-gray-200 hover:text-white transition">
+                        {{ cat.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </aside>
+
+        <!-- Posts Section -->
+        <main class="w-3/4">
+            <h2 class="text-white text-3xl font-bold mb-5">Total Books: {{ dt|length }}</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for post in dt %}
+                    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1 hover:scale-105 overflow-hidden">
+                        <!-- Image Section -->
+                        <div class="relative w-full h-64 bg-gray-100">
+                            <img class="absolute inset-0 w-full h-full object-cover" src="{{ post.image.url }}" alt="book-photo">
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="p-4 space-y-2">
+                            <h5 class="text-xl font-semibold text-gray-800">{{ post.title }}</h5>
+                            
+                            <p class="text-gray-700">
+                                <span class="font-medium">Price:</span> 
+                                <span class="text-teal-600 font-semibold">${{ post.BookPrice }}</span>
+                            </p>
+                            
+                            <p class="text-gray-600 text-sm">
+                                <span class="font-medium">Description:</span> {{ post.description|truncatewords:10 }}
+                            </p>
+                            
+                          
+
+                            <div class="pt-3">
+                                <a href="{% url 'book_detail' post.id %}"
+                                   class="block text-center px-4 py-2 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors">
+                                   Book Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+
+{% endblock content %}
