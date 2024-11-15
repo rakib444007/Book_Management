@@ -24,6 +24,8 @@ urlpatterns = [
     path('',include('User_profile.urls')),
     path('',include('transactions.urls')),
     path('',include('book_post.urls')),
+    path('',include('core.urls')),
+    path('',include('borrow_book.urls')),
 ]
 
 
