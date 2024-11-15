@@ -19,7 +19,7 @@ from .models import UserProfile
 class UserRegistrationView(FormView):
     template_name ='registration_form.html'
     form_class =UserResgistrationsForm
-    success_url = reverse_lazy('')
+    success_url = reverse_lazy('register')
 
 
     def form_valid(self,form):
