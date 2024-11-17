@@ -12,7 +12,8 @@ from borrow_book.models import BorrowBook,Book
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib import messages
 from .models import UserProfile
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -40,15 +41,14 @@ class UserLoginView(LoginView):
     
 
 
-
+@login_required
 def Userlogout(request):
     logout(request)
     return redirect('homepage')
 
 
-    
-
-class ReturnBorrowBook(LoginRequiredMixin,View):
+@method_decorator(login_required, name='dispatch')
+class ReturnBorrowBook(View):
     def post(self,request,book_id):
         book = get_object_or_404(Book,id = book_id)
         borrowed_book = BorrowBook.objects.get(user=request.user,book = book)
@@ -69,8 +69,8 @@ class ReturnBorrowBook(LoginRequiredMixin,View):
         return redirect('profile')
 
 
-
-class BorrowReportView(LoginRequiredMixin,ListView):
+@method_decorator(login_required, name='dispatch')
+class BorrowReportView(ListView):
     model = BorrowBook
     template_name='profile.html'
     context_object_name='borrow_details'

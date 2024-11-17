@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def send_transaction_email(user, amount, subject, template):
@@ -16,6 +18,7 @@ def send_transaction_email(user, amount, subject, template):
         send_email.attach_alternative(message, "text/html")
         send_email.send()
 
+@method_decorator(login_required, name='dispatch')
 class DepositeFormView(FormView):
     form_class = DepositForm
     template_name = 'transaction/deposite_form.html'
