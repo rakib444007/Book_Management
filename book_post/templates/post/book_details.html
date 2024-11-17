@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-
 {% block content %}
 <div class="max-w-4xl mx-auto py-12 px-6 bg-gray-50 rounded-lg shadow-lg">
-    <!-- Book Title and Image -->
+
     <div class="flex flex-col md:flex-row items-center md:items-start gap-8 mb-10">
         <div class="w-full md:w-1/2">
             <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-full h-80 object-cover rounded-lg shadow-md">
@@ -24,7 +23,6 @@
         </div>
     </div>
 
-    <!-- Reviews Section -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-10">
         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Reviews</h3>
         {% for review in book.book_review.all %}
@@ -36,11 +34,10 @@
                 </div>
             </div>
         {% empty %}
-            <p class="text-gray-500">No reviews yet. Be the first to review this book!</p>
+            <p class="text-gray-500">No reviews yet. Buy the first to review this book!</p>
         {% endfor %}
     </div>
 
-    <!-- Review Form -->
     {% if can_review %}
         <div class="bg-white rounded-lg shadow-md p-6">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Leave a Review</h3>

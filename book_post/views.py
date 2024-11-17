@@ -58,7 +58,7 @@ class BookDetailView(DetailView):
         user = self.request.user
         context["can_borrow"] = user.is_authenticated and not BorrowBook.objects.filter(user=user,book=book)
         context["can_review"] = user.is_authenticated and BorrowBook.objects.filter(user=user, book=book).exists()
-        context["review_form"] = BookReviewForm()  # Include review form
+        context["review_form"] = BookReviewForm()
         return context
 
 
