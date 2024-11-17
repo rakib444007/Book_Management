@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Transaction Report {% endblock title %}
+
+{% block content %}
+<div class="container mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
+  <!-- Report Title -->
+  <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Transaction Report</h1>
+
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full table-auto border-collapse rounded-lg shadow-md bg-gray-50">
+      <!-- Table Header -->
+      <thead class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <tr>
+          <th class="px-6 py-4 text-left font-semibold text-sm">Date</th>
+          <th class="px-6 py-4 text-left font-semibold text-sm">Transaction ID</th>
+          <th class="px-6 py-4 text-left font-semibold text-sm">Book Name</th>
+          <th class="px-6 py-4 text-left font-semibold text-sm">Price</th>
+          <th class="px-6 py-4 text-left font-semibold text-sm">Balance After Transaction</th>
+          <th class="px-6 py-4 text-center font-semibold text-sm">Return Book</th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody>
+        {% for transaction in borrow_details %}
+          <tr class="border-b last:border-0 hover:bg-gray-50 transition duration-200">
+            <td class="px-6 py-4 text-gray-700">{{ transaction.borrow_book_date|date:"M d, Y" }}</td>
+            <td class="px-6 py-4 text-gray-700">{{ transaction.id }}</td>
+            <td class="px-6 py-4 text-gray-700">{{ transaction.book.title }}</td>
+            <td class="px-6 py-4 text-gray-700">${{ transaction.book.BookPrice|floatformat:2|intcomma }}</td>
+            <td class="px-6 py-4 text-gray-700">${{ transaction.after_balance_borrow_book |floatformat:2|intcomma }}</td>
+            <td class="px-6 py-4 text-center">
+              <form action="{% url 'book_return' transaction.book.id %}" method="post" class="inline-block">
+                {% csrf_token %}
+                <button type="submit" class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300 transition duration-200">
+                  Return
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
