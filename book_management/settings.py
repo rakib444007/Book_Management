@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =env("SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['book-management-Ogw3.onrender.com','localhost','127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://book-management-Ogw3.onrender.com']
